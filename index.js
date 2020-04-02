@@ -7,7 +7,7 @@ const bot = new Discord.Client({
 });
 
 bot.on("ready", () => {
-    bot.user.setGame('Awesome Fun Game'); //you can set a default game
+    bot.user.setGame('.help'); //you can set a default game
     console.log(`Bot is online!\n${bot.users.size} users, in ${bot.guilds.size} servers connected.`);
 });
 
@@ -20,10 +20,10 @@ bot.on("message", async message => {
     if(message.author.bot || message.system) return; // Ignore bots
     
     if(message.channel.type === 'dm') { // Direct Message
-        return; //Optionally handle direct messages
+        return; //optionally handle dms
     } 
 
-    console.log(message.content); // Log chat to console for debugging/testing
+    //console.log(message.content); // Log chat to console for debugging/testing
     
     if (message.content.indexOf(config.prefix) === 0) { // Message starts with your prefix
         
@@ -36,15 +36,10 @@ bot.on("message", async message => {
         args.shift(); // delete the first word from the args
 
         
-        if (cmd === 'hi' || cmd === 'hello') { // the first command [I don't like ping > pong]
-            message.channel.send(`Hi there ${message.author.toString()}`);
+        if (cmd === 'ping') { 
+            message.channel.send(`pong`);
             return; 
         }
-
-        else if (cmd === 'ping') { // ping > pong just in case..
-            return message.channel.send('pong');
-        }
-
         // Make sure this command always checks for you. YOU NEVER WANT ANYONE ELSE TO USE THIS COMMAND
         else if (cmd === "eval" && message.author.id === config.owner){ // < checks the message author's id to yours in config.json.
             const code = args.join(" ");
